@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  background-color: whitesmoke;
+  padding: 20px;
+  width: 100vw;
+
+  .nav-link {
+    color: black;
+    font-size: 1.5rem;
+
+    &:hover {
+      cursor: pointer;
+      color: green;
+    }
+  }
+}
