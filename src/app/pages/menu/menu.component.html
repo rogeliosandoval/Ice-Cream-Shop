@@ -1,1 +1,16 @@
-<p>menu works!</p>
+<div class="container">
+  <h1>Menu Items</h1>
+  <div class="menu-items">
+    @for (item of menuItems(); track item.id) {
+      <div class="menu-item">
+        <div class="name"><strong>Name:</strong> {{ item.name }}</div>
+        <div class="price"><strong>Price:</strong> {{ item.price }}</div>
+        <div class="calories"><strong>Calories:</strong> {{ item.calories }} </div>
+        <div class="flavor"><strong>Flavor:</strong> {{ item.flavor }}</div>
+        @if (item.quantity) {
+          <div class="quantity"><strong>Quantity:</strong> {{ item?.quantity }}</div>
+        }
+      </div>
+    }
+  </div>
+</div>

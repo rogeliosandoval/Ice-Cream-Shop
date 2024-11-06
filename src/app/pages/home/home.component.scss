@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  h1 {
+    font-size: 4rem;
+  }
+}
+
+ul {
+  padding: 20px;
+
+  li {
+    font-size: 2rem;
+    margin: 10px;
+  }
+}
