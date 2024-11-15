@@ -24,27 +24,32 @@ export class MenuComponent implements OnInit {
     category: '',
     description: ''
   }])
+  public showData = signal<boolean>(false)
+  public showError = signal<boolean>(false)
 
   // Angular Lifecycle Hook (ngOnInit calls functions when component/page is initialized)
   ngOnInit(): void {
-    // This is returning an Observable (you must always subscribe to get data)
-    this.http.get<MenuItem[]>(this.api)
-    .pipe (
-      // RxJS operator 'filter' is acting as just a check. It does not modify data at all
-      // filter((value: MenuItem[]) => value.some(item => item.category === 'classic'))
-      // RxJs operator 'map' modifies the data coming in from the APi
-      map((value: MenuItem[]) => value.filter((item: MenuItem) => item.price <= 5))
-    )
-    .subscribe({
-      next: response => {
-        this.iceCreams.set(response)
-      },
-      error: error => {
-        throw error
-      },
-      complete: () => {
-        console.log('the subscription completed')
-      }
-    })
+    setTimeout(() => {
+      // This is returning an Observable (you must always subscribe to get data)
+      this.http.get<MenuItem[]>(this.api)
+      .pipe (
+        // RxJS operator 'filter' is acting as just a check. It does not modify data at all
+        // filter((value: MenuItem[]) => value.some(item => item.category === 'classic'))
+        // RxJs operator 'map' modifies the data coming in from the APi
+        map((value: MenuItem[]) => value.filter((item: MenuItem) => item.price <= 5))
+      )
+      .subscribe({
+        next: response => {
+          this.iceCreams.set(response)
+        },
+        error: error => {
+          this.showError.set(true)
+          throw error
+        },
+        complete: () => {
+          this.showData.set(true)
+        }
+      })
+    }, 3000)
   }
 }

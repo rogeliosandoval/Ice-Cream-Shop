@@ -1,11 +1,19 @@
 <div class="menu-items">
-  @for(item of iceCreams(); track item) {
-    <div class="menu-item">
-      <div class="name">{{ item.name}} </div>
-      <div class="price">{{ item.price }}</div>
-      <div class="calories">{{ item.calories }}</div>
-      <div class="category">{{ item.category }}</div>
-      <div class="description">{{ item.description }}</div>
-    </div>
+  @if (showData()) {
+    @for(item of iceCreams(); track item) {
+      <div class="menu-item">
+        <div class="name">{{ item.name}} </div>
+        <div class="price">{{ item.price }}</div>
+        <div class="calories">{{ item.calories }}</div>
+        <div class="category">{{ item.category }}</div>
+        <div class="description">{{ item.description }}</div>
+      </div>
+    }
+  } @else {
+    @if (showError()) {
+      There is an error! Please contact your developer.
+    } @else {
+      Loading.........
+    }
   }
 </div>
