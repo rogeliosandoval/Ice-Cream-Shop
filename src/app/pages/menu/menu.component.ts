@@ -3,7 +3,7 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MenuItem } from '../../interfaces/menu.interfaces';
 // RxJS (Reactive Extensions for JavaScript) is for working with asynchronous data such as Observables
-import { filter, map } from 'rxjs';
+import { filter, firstValueFrom, map } from 'rxjs';
 
 @Component({
   selector: 'app-menu',
@@ -27,17 +27,15 @@ export class MenuComponent implements OnInit {
   public showData = signal<boolean>(false)
   public showError = signal<boolean>(false)
 
+  // constructor(
+  //   private http: HttpClient
+  // ){}
+
   // Angular Lifecycle Hook (ngOnInit calls functions when component/page is initialized)
   ngOnInit(): void {
     setTimeout(() => {
       // This is returning an Observable (you must always subscribe to get data)
       this.http.get<MenuItem[]>(this.api)
-      .pipe (
-        // RxJS operator 'filter' is acting as just a check. It does not modify data at all
-        // filter((value: MenuItem[]) => value.some(item => item.category === 'classic'))
-        // RxJs operator 'map' modifies the data coming in from the APi
-        map((value: MenuItem[]) => value.filter((item: MenuItem) => item.price <= 5))
-      )
       .subscribe({
         next: response => {
           this.iceCreams.set(response)
