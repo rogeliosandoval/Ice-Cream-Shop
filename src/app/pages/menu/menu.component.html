@@ -1,19 +1,51 @@
+<div class="form-container">
+  <h1>Add Menu Item</h1>
+  <form [formGroup]="iceCreamForm">
+    <div class="input-container">
+      <label for="name">Name</label>
+      <input type="text" formControlName="name" placeholder="Name">
+    </div>
+    <div class="input-container">
+      <label for="price">Price</label>
+      <input type="text" formControlName="price" placeholder="Price">
+    </div>
+    <div class="input-container">
+      <label for="calories">Calories</label>
+      <input type="text" formControlName="calories" placeholder="Calories">
+    </div>
+    <div class="input-container">
+      <label for="category">Category</label>
+      <input type="text" formControlName="category" placeholder="Cateogry">
+    </div>
+    <div class="input-container">
+      <label for="description">Description</label>
+      <textarea name="description" row="8" formControlName="description" placeholder="Add description here"></textarea>
+    </div>
+    <button type="submit">Submit Form</button>
+  </form>
+</div>
 <div class="menu-items">
   @if (showData()) {
     @for(item of iceCreams(); track item) {
-      <div class="menu-item">
-        <div class="name">{{ item.name}} </div>
-        <div class="price">{{ item.price }}</div>
-        <div class="calories">{{ item.calories }}</div>
-        <div class="category">{{ item.category }}</div>
-        <div class="description">{{ item.description }}</div>
-      </div>
+      <div class="menu-card">
+        <div class="menu-card__content">
+          <h3 class="menu-card__title">{{ item.name }}</h3>
+          <p class="menu-card__description">{{ item.description }}</p>
+          <div class="menu-card__details">
+            <span class="menu-card__price">${{ item.price }}</span>
+            <span class="menu-card__calories">{{ item.calories }} cal</span>
+          </div>
+          <!-- <div class="button-container">
+            <button class="menu-card__button">Add to Cart</button>
+          </div> -->
+        </div>
+      </div>      
     }
   } @else {
     @if (showError()) {
-      There is an error! Please contact your developer.
+      <strong style="font-size: 2.1rem;">There is an error! Please contact your developer.</strong>
     } @else {
-      Loading.........
+      <div class="loader"></div>
     }
   }
 </div>

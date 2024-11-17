@@ -19,8 +19,8 @@ export class ObservableComponent implements OnInit {
   public observableSignal = signal<any>(undefined)
 
   ngOnInit(): void {
-    console.log('Promise: ', this.promiseSignal())
-    console.log('Observable: ', this.observableSignal())
+    // console.log('Promise: ', this.promiseSignal())
+    // console.log('Observable: ', this.observableSignal())
   }
 
   // Promise are EAGER. They want to run right away no matter what.
@@ -28,26 +28,26 @@ export class ObservableComponent implements OnInit {
   // .then((response) =>) to do something with the data receieved
   // Returns a SINGLE value
   // Will usually come in as some function/api
-  isPromise = new Promise((resolve, reject) => {
-    let error = false
+  // isPromise = new Promise((resolve, reject) => {
+  //   let error = false
 
-    if (error) {
-      reject('DATA FROM PROMISE WAS REJECTED')
-    } else {
-      let userData = {
-        name: 'Hafiz',
-        email: 'hafiz10@gmail.com',
-        phone: '123456789'
-      }
-      resolve(userData)
-    }
-  }).then((response) => {
-    try {
-      this.promiseSignal.set(response)
-    } catch(error) {
-      throw error
-    }
-  })
+  //   if (error) {
+  //     reject('DATA FROM PROMISE WAS REJECTED')
+  //   } else {
+  //     let userData = {
+  //       name: 'Hafiz',
+  //       email: 'hafiz10@gmail.com',
+  //       phone: '123456789'
+  //     }
+  //     resolve(userData)
+  //   }
+  // }).then((response) => {
+  //   try {
+  //     this.promiseSignal.set(response)
+  //   } catch(error) {
+  //     throw error
+  //   }
+  // })
 
   // Observables are LAZY. They need a subscriber.
   // You can use rxjs (Reactive Extensions For JavaScript)
@@ -72,24 +72,10 @@ export class ObservableComponent implements OnInit {
         '444'
       ]
 
-      subscriber.next(userData) //inner-observables
-      subscriber.next('THIS IS A MESSAGE') //inner-observables
-      subscriber.next(priceData)//inner-observables
+      subscriber.next(userData) //inner-observable
+      subscriber.next('THIS IS A MESSAGE') //inner-observable
+      subscriber.next(priceData)//inner-observable
       subscriber.complete()
-    }
-  })
-  .pipe(
-    first() //rxjs operator that gets the first value
-  )
-  .subscribe({
-    next: response => {
-      this.observableSignal.set(response)
-    },
-    error: error => {
-      throw error
-    },
-    complete: () => {
-      // console.log('')
     }
   })
 }

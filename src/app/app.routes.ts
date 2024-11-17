@@ -4,6 +4,7 @@ import { AboutComponent } from './pages/about/about.component';
 import { MenuComponent } from './pages/menu/menu.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { ObservableComponent } from './pages/observable/observable.component';
+import { InfoComponent } from './pages/info/info.component';
 
 export const routes: Routes = [
   {
@@ -26,6 +27,10 @@ export const routes: Routes = [
   {
     path: 'observable',
     component: ObservableComponent
+  },
+  {
+    path:'info',
+    component: InfoComponent
   },
   {
     path: '**',

@@ -2,19 +2,21 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 // HTTPClient allows us to work with Observables (AKA data from an API)
 import { HttpClient } from '@angular/common/http';
 import { MenuItem } from '../../interfaces/menu.interfaces';
-// RxJS (Reactive Extensions for JavaScript) is for working with asynchronous data such as Observables
-import { filter, firstValueFrom, map } from 'rxjs';
+import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-menu',
   standalone: true,
-  imports: [],
+  imports: [
+    FormsModule,
+    ReactiveFormsModule
+  ],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.scss'
 })
 export class MenuComponent implements OnInit {
   private http = inject(HttpClient)
-  private api = 'https://672ec227229a881691f0d9bf.mockapi.io/scoop/iceCreams'
+  private api = 'https://672ec227229a881691f0d9bf.mockapi.io/scoop/ice-creams'
   // public iceCreams = signal<MenuItem[]>([])
   public iceCreams = signal<MenuItem[]>([{
     id: 0,
@@ -26,28 +28,41 @@ export class MenuComponent implements OnInit {
   }])
   public showData = signal<boolean>(false)
   public showError = signal<boolean>(false)
+  
+  public iceCreamForm = new FormGroup({
+    name: new FormControl(''),
+    price: new FormControl(null),
+    calories: new FormControl(null),
+    category: new FormControl(''),
+    description: new FormControl('')
+  })
 
-  // constructor(
-  //   private http: HttpClient
-  // ){}
-
-  // Angular Lifecycle Hook (ngOnInit calls functions when component/page is initialized)
   ngOnInit(): void {
     setTimeout(() => {
-      // This is returning an Observable (you must always subscribe to get data)
-      this.http.get<MenuItem[]>(this.api)
-      .subscribe({
+      this.http.get<MenuItem[]>(this.api).subscribe({
         next: response => {
           this.iceCreams.set(response)
+          this.showData.set(true)
         },
-        error: error => {
+        error: err => {
           this.showError.set(true)
-          throw error
         },
         complete: () => {
-          this.showData.set(true)
+          console.log('The subscription has completed!')
         }
       })
     }, 3000)
+  }
+
+  public addItem(): void {
+
+  }
+
+  public deleteItem(): void {
+
+  }
+
+  public updateItem(): void {
+
   }
 }
