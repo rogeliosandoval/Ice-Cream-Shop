@@ -1,5 +1,5 @@
 export interface MenuItem {
-  id: number
+  id?: string
   name: string
   price: number 
   calories: number
