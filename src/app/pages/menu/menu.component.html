@@ -41,7 +41,7 @@
               <span class="menu-card__calories">{{ item.calories }} cal</span>
             </div>
             <div class="button-container">
-              <!-- <button class="menu-card__button" style="background: rgb(212, 138, 0)" (click)="this.showEditForm.set(true)">Edit</button> -->
+              <button class="menu-card__button" style="background: rgb(212, 138, 0)" (click)="openEditForm(item.id)">Edit</button>
               <button class="menu-card__button" style="background: red;" (click)="deleteItem(item.id)">Delete</button>
             </div>
           </div>
@@ -55,12 +55,12 @@
       }
     }
   </div>
-  <!-- @if (showEditForm()) {
+  @if (showEditForm()) {
     <div class="modal">
       <button (click)="showEditForm.set(false)">Close Form</button>
       <div class="form-container">
         <h1>Edit Menu Form</h1>
-        <form>
+        <form [formGroup]="iceCreamFormEdit" (ngSubmit)="updateItem()">
           <div class="input-container">
             <label for="name">Name</label>
             <input type="text" formControlName="name" placeholder="Name">
@@ -85,5 +85,5 @@
         </form>
       </div>
     </div>
-  } -->
+  }
 </div>

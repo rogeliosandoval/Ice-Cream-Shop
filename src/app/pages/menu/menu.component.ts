@@ -39,19 +39,21 @@ export class MenuComponent implements OnInit {
     description: new FormControl('')
   })
 
-  // public iceCreamFormEdit = new FormGroup({
-  //   name: new FormControl(''),
-  //   price: new FormControl(''),
-  //   calories: new FormControl(''),
-  //   category: new FormControl(''),
-  //   description: new FormControl('')
-  // })
+  // Reactive/Template Forms have strings as default values
+  public iceCreamFormEdit = new FormGroup({
+    id: new FormControl(''),
+    name: new FormControl(''),
+    price: new FormControl(''),
+    calories: new FormControl(''),
+    category: new FormControl(''),
+    description: new FormControl(''),
+  })
 
   ngOnInit(): void {
     setTimeout(() => {
       this.http.get<MenuItem[]>(this.api).subscribe({
         next: response => {
-          console.log(response)
+          // console.log(response)
           this.iceCreams.set(response)
           this.showData.set(true)
         },
@@ -62,7 +64,7 @@ export class MenuComponent implements OnInit {
           // console.log('The subscription has completed!')
         }
       })
-    }, 3000)
+    }, 1500)
   }
 
   public addItem(): void {
@@ -94,17 +96,46 @@ export class MenuComponent implements OnInit {
     })
   }
 
-  // public updateItem(id: any): void {
-  //   this.http.patch<MenuItem>(this.api + `/${id}`, this.iceCreamFormEdit.value).subscribe({
-  //     next: response => {
-  //       console.log(response)
-  //     },
-  //     error: err => {
+  public openEditForm(id: any): void {
+    // Hoisting
+    this.http.get<MenuItem>(this.api + `/${id}`).subscribe({
+      next: response => {
+        console.log(response)
+        // ? "It is okay for this value to be null or undefined, don't get mad at me"
+        // ! "Don't worry! I will make sure this get's assigned correctly"
+        this.iceCreamFormEdit.get('id')?.setValue(response.id!)
+        this.iceCreamFormEdit.get('name')?.setValue(response.name)
+        this.iceCreamFormEdit.get('price')?.setValue(response.price.toString())
+        this.iceCreamFormEdit.get('calories')?.setValue(response.calories.toString())
+        this.iceCreamFormEdit.get('category')?.setValue(response.category)
+        this.iceCreamFormEdit.get('description')?.setValue(response.description)
+      },
+      error: err => {
+        console.log(err)
+      },
+      complete: () => {
+        this.showEditForm.set(true)
+      }
+    })
+  }
 
-  //     },
-  //     complete: () => {
+  public updateItem(): void {
+    this.http.put(`${this.api}/${this.iceCreamFormEdit.get('id')?.value}`, this.iceCreamFormEdit.value).subscribe({
+      next: response => {
+        console.log(response)
+      },
+      error: err => {
 
-  //     }
-  //   })
-  // }
+      },
+      complete: () => {
+        window.location.reload()
+      }
+    })
+  }
+
+  // Template Literal
+  // console.log(`${this.api}/${this.iceCreamFormEdit.get('id')?.value}`)
+
+  // Concatination
+  // console.log(this.api + '/' + this.iceCreamFormEdit.get('id')?.value)
 }
