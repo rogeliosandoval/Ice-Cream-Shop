@@ -1,1 +1,1 @@
-Tutoring material
+Tutorting material for the students.
